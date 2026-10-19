@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MULA Eatery - a gentle start to every moment</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Poppins & Plus Jakarta Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mula: {
+                            blue: '#5c9bd5',
+                            darkblue: '#3b7bbb',
+                            lightblue: '#eef6fc',
+                            softbg: '#faf8f5',
+                            text: '#2c3e50',
+                            subtext: '#64748b',
+                            accent: '#e86a5d',
+                            cream: '#f4efe8'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #faf8f5;
+            color: #2c3e50;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printableReceipt, #printableReceipt * {
+                visibility: visible;
+            }
+            #printableReceipt {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="bg-mula-softbg text-mula-text antialiased flex flex-col min-h-screen relative">
+
+    <!-- TOAST NOTIFICATION FOR ADD TO CART -->
+    <div id="toastNotification" class="fixed bottom-5 right-5 z-50 bg-mula-text text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3 transition-all duration-300 transform translate-y-20 opacity-0 pointer-events-none">
+        <div class="w-7 h-7 bg-emerald-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <div>
+            <p id="toastMessage" class="text-xs font-semibold">Menu berhasil ditambahkan!</p>
+            <p class="text-[10px] text-slate-300">Lihat keranjang kapan saja untuk checkout.</p>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-mula-lightblue shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo & Name -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-full bg-mula-lightblue flex items-center justify-center text-mula-blue group-hover:scale-105 transition-transform duration-300">
+                        <svg viewBox="0 0 100 100" class="w-7 h-7 fill-mula-blue">
+                            <circle cx="50" cy="50" r="7" />
+                            <path d="M50 15 C52 30, 52 35, 50 40 C48 35, 48 30, 50 15 Z" />
+                            <path d="M50 85 C52 70, 52 65, 50 60 C48 65, 48 70, 50 85 Z" />
+                            <path d="M15 50 C30 52, 35 52, 40 50 C35 48, 30 48, 15 50 Z" />
+                            <path d="M85 50 C70 52, 65 52, 60 50 C65 48, 70 48, 85 50 Z" />
+                            <path d="M25 25 C37 34, 40 38, 43 43 C38 40, 34 37, 25 25 Z" />
+                            <path d="M75 75 C63 66, 60 62, 57 57 C62 60, 66 63, 75 75 Z" />
+                            <path d="M25 75 C34 63, 38 60, 43 57 C40 62, 37 66, 25 75 Z" />
+                            <path d="M75 25 C66 34, 62 38, 57 43 C60 40, 63 37, 75 25 Z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="font-heading font-bold text-xl tracking-tight text-mula-text block leading-none">mula</span>
+                        <span class="text-xs text-mula-blue font-medium tracking-widest uppercase block mt-1">eatery</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav Links -->
+                <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                    <a href="#hero" class="text-mula-text hover:text-mula-blue transition-colors">Home</a>
+                    <a href="#summer" class="text-mula-text hover:text-mula-blue transition-colors flex items-center gap-1.5">
+                        <span>Summer Edition</span>
+                        <span class="bg-mula-blue/10 text-mula-blue text-[10px] px-2 py-0.5 rounded-full font-bold uppercase">Viral</span>
+                    </a>
+                    <a href="#menu" class="text-mula-text hover:text-mula-blue transition-colors">Menu Catalog</a>
+                    <a href="#about" class="text-mula-text hover:text-mula-blue transition-colors">About Us</a>
+                    <a href="#location" class="text-mula-text hover:text-mula-blue transition-colors">Location</a>
+                </div>
+
+                <!-- Right Actions (Cart Button) -->
+                <div class="flex items-center gap-4">
+                    <button id="openCartBtn" class="relative bg-mula-blue hover:bg-mula-darkblue text-white p-3 rounded-2xl flex items-center justify-center transition-all duration-300 shadow-md hover:shadow-mula-blue/30">
+                        <i class="fa-solid fa-bag-shopping text-lg"></i>
+                        <span id="cartBadge" class="absolute -top-2 -right-2 bg-mula-accent text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hidden border-2 border-white">0</span>
+                    </button>
+
+                    <!-- Mobile Menu Trigger -->
+                    <button id="mobileMenuBtn" class="md:hidden text-mula-text p-2 rounded-xl focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-b border-mula-lightblue px-4 pt-2 pb-6 space-y-3">
+            <a href="#hero" class="mobile-nav-link block py-2 px-3 rounded-lg text-mula-text font-medium hover:bg-mula-lightblue">Home</a>
+            <a href="#summer" class="mobile-nav-link block py-2 px-3 rounded-lg text-mula-text font-medium hover:bg-mula-lightblue">Summer Edition</a>
+            <a href="#menu" class="mobile-nav-link block py-2 px-3 rounded-lg text-mula-text font-medium hover:bg-mula-lightblue">Menu Catalog</a>
+            <a href="#about" class="mobile-nav-link block py-2 px-3 rounded-lg text-mula-text font-medium hover:bg-mula-lightblue">About Us</a>
+            <a href="#location" class="mobile-nav-link block py-2 px-3 rounded-lg text-mula-text font-medium hover:bg-mula-lightblue">Location</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="relative py-12 md:py-20 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                
+                <!-- Left Text Content -->
+                <div class="space-y-6 text-center md:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-mula-lightblue border border-mula-blue/20 text-mula-blue text-xs font-semibold tracking-wide uppercase">
+                        <svg viewBox="0 0 100 100" class="w-4 h-4 fill-mula-blue">
+                            <circle cx="50" cy="50" r="10" />
+                            <path d="M50 10 L50 40 M50 60 L50 90 M10 50 L40 50 M60 50 L90 50 M22 22 L42 42 M58 58 L78 78 M22 78 L42 58 M58 42 L78 22" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+                        </svg>
+                        Welcome to MULA Eatery
+                    </div>
+
+                    <h1 class="font-heading font-bold text-4xl sm:text-5xl lg:text-6xl text-mula-text leading-tight">
+                        a gentle start to <span class="text-mula-blue underline decoration-mula-blue/30 decoration-wavy">every moment</span>
+                    </h1>
+
+                    <p class="text-mula-subtext text-base sm:text-lg max-w-xl mx-auto md:mx-0">
+                        Rasakan kehangatan hidangan pilihan yang dikurasi dengan cermat. Tempat yang tenang untuk rehat sejenak dan menikmati setiap rasa.
+                    </p>
+
+                    <div class="pt-2 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="#menu" class="bg-mula-blue hover:bg-mula-darkblue text-white px-8 py-4 rounded-2xl font-semibold shadow-lg shadow-mula-blue/20 transition-all duration-300 text-center flex items-center justify-center gap-2">
+                            <span>Eksplor Menu</span>
+                            <i class="fa-solid fa-arrow-right text-sm"></i>
+                        </a>
+                        <a href="#summer" class="bg-white hover:bg-mula-lightblue text-mula-blue border border-mula-blue/30 px-8 py-4 rounded-2xl font-semibold transition-all duration-300 text-center">
+                            Lihat Summer Edition
+                        </a>
+                    </div>
+
+                    <div class="pt-6 border-t border-mula-lightblue/80 flex items-center justify-center md:justify-start gap-8 text-xs text-mula-subtext">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-leaf text-mula-blue"></i>
+                            <span>Bahan Segar & Alami</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-heart text-mula-accent"></i>
+                            <span>Curated, Not Crowded</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Visual Hero Banner -->
+                <div class="relative flex justify-center">
+                    <div class="w-full max-w-md bg-white p-4 rounded-3xl shadow-xl border border-mula-lightblue relative z-10">
+                        <div class="relative rounded-2xl overflow-hidden aspect-[4/3] mb-4">
+                            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80" alt="Mula Special Meal" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
+                                <span class="text-white font-bold text-sm tracking-wide">MULA Special Selection</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-mula-lightblue/60 p-5 rounded-2xl text-center space-y-3 border border-mula-blue/10">
+                            <div class="w-12 h-12 mx-auto bg-white rounded-full flex items-center justify-center shadow-sm text-mula-blue">
+                                <svg viewBox="0 0 100 100" class="w-8 h-8 fill-mula-blue">
+                                    <circle cx="50" cy="50" r="8"/>
+                                    <path d="M50 15 C53 32, 53 38, 50 42 C47 38, 47 32, 50 15 Z"/>
+                                    <path d="M50 85 C53 68, 53 62, 50 58 C47 62, 47 68, 50 85 Z"/>
+                                    <path d="M15 50 C32 53, 38 53, 42 50 C38 47, 32 47, 15 50 Z"/>
+                                    <path d="M85 50 C68 53, 62 53, 58 50 C62 47, 68 47, 85 50 Z"/>
+                                </svg>
+                            </div>
+
+                            <h3 class="font-heading font-bold text-xl text-mula-text">#GoodThingsTakeRoots</h3>
+                            <p class="text-xs italic text-mula-subtext">"Hope you feel at ease for a while"</p>
+
+                            <div class="pt-2 grid grid-cols-2 gap-3 text-left">
+                                <div class="bg-white p-3 rounded-xl border border-mula-lightblue">
+                                    <span class="text-[10px] text-mula-blue font-bold uppercase tracking-wider block">Signature Drink</span>
+                                    <span class="font-semibold text-xs block truncate">Tokyo Fog</span>
+                                    <span class="text-[11px] text-mula-subtext">Rp30.000</span>
+                                </div>
+                                <div class="bg-white p-3 rounded-xl border border-mula-lightblue">
+                                    <span class="text-[10px] text-mula-blue font-bold uppercase tracking-wider block">Favorite Dish</span>
+                                    <span class="font-semibold text-xs block truncate">Hamburg Tare</span>
+                                    <span class="text-[11px] text-mula-subtext">Rp58.000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Decorative background circles -->
+                    <div class="absolute -top-6 -right-6 w-32 h-32 bg-mula-blue/10 rounded-full blur-xl"></div>
+                    <div class="absolute -bottom-6 -left-6 w-40 h-40 bg-mula-cream rounded-full blur-xl"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SUMMER EDITION SPECIAL BANNER -->
+    <section id="summer" class="py-12 bg-gradient-to-r from-mula-lightblue via-white to-mula-lightblue border-y border-mula-blue/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <span class="bg-mula-blue text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest inline-block mb-3">Summer & Trying the Viral</span>
+                <h2 class="font-heading font-bold text-3xl sm:text-4xl text-mula-text">Summer I. Viral Edition</h2>
+                <p class="text-mula-subtext text-sm mt-2">Fresh ideas, seasonal favourites, and a few things we're curious about.</p>
+            </div>
+
+            <!-- Featured Cards Grid -->
+            <div id="summerFeaturedGrid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN MENU CATALOG SECTION -->
+    <section id="menu" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-grow w-full">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+            <div>
+                <h2 class="font-heading font-bold text-3xl text-mula-text">Menu Catalog</h2>
+                <p class="text-mula-subtext text-sm">Pilih menu favoritmu dari sajian khas MULA Eatery</p>
+            </div>
+
+            <!-- Live Search Bar -->
+            <div class="relative w-full md:w-72">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-mula-subtext"></i>
+                <input type="text" id="searchInput" placeholder="Cari menu minuman/makanan..." 
+                    class="w-full pl-11 pr-4 py-3 bg-white border border-mula-lightblue rounded-2xl text-sm focus:outline-none focus:border-mula-blue shadow-sm transition-all">
+            </div>
+        </div>
+
+        <!-- Category Tabs (Horizontal Scrollable) -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-8 hide-scrollbar scroll-smooth" id="categoryTabs">
+            <!-- Tabs JS Rendered -->
+        </div>
+
+        <!-- Menu Cards Grid -->
+        <div id="menuGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Cards rendered dynamically -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden text-center py-16 bg-white rounded-3xl border border-mula-lightblue">
+            <i class="fa-regular fa-face-frown text-4xl text-mula-subtext mb-3 block"></i>
+            <h3 class="font-bold text-lg text-mula-text">Menu tidak ditemukan</h3>
+            <p class="text-sm text-mula-subtext mt-1">Coba gunakan kata kunci lain atau pilih kategori lain.</p>
+        </div>
+    </section>
+
+    <!-- ABOUT US SECTION -->
+    <section id="about" class="py-16 bg-white border-t border-mula-lightblue">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <span class="text-mula-blue font-bold text-xs uppercase tracking-widest block">About MULA Eatery</span>
+                    <h2 class="font-heading font-bold text-3xl sm:text-4xl text-mula-text leading-tight">
+                        A quiet space for comfortable dining & refreshing sips
+                    </h2>
+                    <p class="text-mula-subtext text-sm leading-relaxed">
+                        MULA Eatery hadir sebagai tempat di mana Anda bisa memulai hari atau sekadar melepas lelah di tengah kesibukan. Kami menyajikan persilangan sajian rasa khas—mulai dari hidangan nasi hangat, olahan mie pilihan, hingga seduhan kopi & racikan teh artisan yang menenangkan.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 pt-2">
+                        <div class="p-4 rounded-2xl bg-mula-softbg border border-mula-lightblue">
+                            <span class="font-bold text-2xl text-mula-blue block">100%</span>
+                            <span class="text-xs text-mula-subtext font-medium">Bahan Segar & Berkualitas</span>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-mula-softbg border border-mula-lightblue">
+                            <span class="font-bold text-2xl text-mula-blue block">20+</span>
+                            <span class="text-xs text-mula-subtext font-medium">Varian Minuman Unik</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-mula-lightblue/40 p-8 rounded-3xl border border-mula-blue/20 text-center space-y-4">
+                    <div class="inline-block p-4 bg-white rounded-2xl shadow-sm text-mula-blue mb-2">
+                        <i class="fa-solid fa-mug-hot text-3xl"></i>
+                    </div>
+                    <blockquote class="text-mula-text font-medium text-lg italic">
+                        "Curated, not crowded."
+                    </blockquote>
+                    <p class="text-xs text-mula-subtext max-w-md mx-auto">
+                        Kami merancang setiap resep agar dapat dinikmati tanpa rasa terburu-buru. Jadikan MULA sebagai rumah rehat favoritmu.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOCATION & HOURS SECTION -->
+    <section id="location" class="py-16 bg-mula-softbg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-lg border border-mula-lightblue grid md:grid-cols-3 gap-8">
+                
+                <div class="space-y-4 md:col-span-1">
+                    <span class="text-mula-blue font-bold text-xs uppercase tracking-widest block">Lokasi & Kontak</span>
+                    <h3 class="font-heading font-bold text-2xl text-mula-text">Kunjungi Kami</h3>
+                    
+                    <div class="space-y-3 text-sm text-mula-subtext">
+                        <div class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot text-mula-blue text-base mt-1"></i>
+                            <span>Jl. Mulawarman No. 107H, Karang Mumus, Kec. Samarinda, Kota Samarinda, Kalimantan Timur</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-mula-blue text-base"></i>
+                            <span>0831-8351-6210</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-brands fa-instagram text-mula-blue text-base"></i>
+                            <span>@mula__eatery</span>
+                        </div>
+                    </div>
+
+                    <a href="https://wa.me/6283183516210" target="_blank" class="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-medium px-5 py-3 rounded-xl text-sm transition-colors shadow-md">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        <span>Chat WhatsApp Cafe</span>
+                    </a>
+                </div>
+
+                <!-- Open Hours Info -->
+                <div class="bg-mula-lightblue/40 p-6 rounded-2xl border border-mula-blue/10 flex flex-col justify-between space-y-4 md:col-span-1">
+                    <div>
+                        <h4 class="font-bold text-mula-text mb-3 flex items-center gap-2">
+                            <i class="fa-regular fa-clock text-mula-blue"></i>
+                            <span>Jam Operasional</span>
+                        </h4>
+                        <ul class="text-sm space-y-2 text-mula-subtext">
+                            <li class="flex justify-between border-b border-mula-blue/10 pb-1">
+                                <span>Setiap Hari</span>
+                                <span class="font-semibold text-mula-text">10.00 - 22.00 WITA</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="p-3 bg-white rounded-xl text-xs text-mula-subtext border border-mula-lightblue">
+                        <i class="fa-solid fa-circle-info text-mula-blue mr-1"></i>
+                        <span>*Semua harga belum termasuk PPN 10%</span>
+                    </div>
+                </div>
+
+                <!-- Visual Card Map Mock -->
+                <div class="bg-slate-100 rounded-2xl p-6 flex flex-col justify-center items-center text-center space-y-3 border border-slate-200 md:col-span-1">
+                    <div class="w-12 h-12 bg-mula-blue/20 rounded-full flex items-center justify-center text-mula-blue">
+                        <i class="fa-solid fa-map-location-dot text-xl"></i>
+                    </div>
+                    <h4 class="font-bold text-mula-text text-sm">Petunjuk Arah</h4>
+                    <p class="text-xs text-mula-subtext">Berada di kawasan strategis Karang Mumus, Samarinda.</p>
+                    <a href="https://maps.google.com/?q=Jl.+Mulawarman+No.+107H,+Samarinda" target="_blank" class="text-xs bg-white text-mula-blue font-bold px-4 py-2 rounded-lg border border-mula-blue/30 hover:bg-mula-lightblue transition-colors">
+                        Buka Google Maps
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-mula-lightblue py-10 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+            <div class="flex items-center justify-center gap-2">
+                <svg viewBox="0 0 100 100" class="w-6 h-6 fill-mula-blue">
+                    <circle cx="50" cy="50" r="8"/>
+                    <path d="M50 15 C53 32, 53 38, 50 42 C47 38, 47 32, 50 15 Z"/>
+                    <path d="M50 85 C53 68, 53 62, 50 58 C47 62, 47 68, 50 85 Z"/>
+                    <path d="M15 50 C32 53, 38 53, 42 50 C38 47, 32 47, 15 50 Z"/>
+                    <path d="M85 50 C68 53, 62 53, 58 50 C62 47, 68 47, 85 50 Z"/>
+                </svg>
+                <span class="font-heading font-bold text-lg text-mula-text">mula eatery</span>
+            </div>
+            <p class="text-xs text-mula-subtext italic">"a gentle start to every moment"</p>
+            <p class="text-xs text-mula-subtext pt-2">&copy; <span id="yearSpan"></span> MULA Eatery Samarinda. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- SHOPPING CART MODAL SLIDE-OVER -->
+    <div id="cartModal" class="fixed inset-0 z-50 hidden transition-opacity duration-300">
+        <!-- Backdrop -->
+        <div id="cartBackdrop" class="fixed inset-0 bg-black/40 backdrop-blur-sm opacity-0 transition-opacity"></div>
+
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-in-out" id="cartPanel">
+                
+                <!-- Cart Header -->
+                <div class="p-6 border-b border-mula-lightblue flex items-center justify-between bg-mula-softbg">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-bag-shopping text-mula-blue text-xl"></i>
+                        <h3 class="font-heading font-bold text-lg text-mula-text">Pesanan Saya</h3>
+                    </div>
+                    <button id="closeCartBtn" class="text-mula-subtext hover:text-mula-text p-2 rounded-xl">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Form Data Pemesan Wajib (Required Section) -->
+                <div class="p-5 bg-white border-b border-mula-lightblue space-y-3">
+                    <h4 class="font-bold text-xs uppercase tracking-wider text-mula-blue flex items-center gap-1.5">
+                        <i class="fa-solid fa-user-pen"></i> Data Pemesan (Wajib)
+                    </h4>
+
+                    <!-- Nama Pemesan -->
+                    <div>
+                        <label class="block text-xs font-semibold text-mula-text mb-1">Nama Pemesan <span class="text-mula-accent">*</span></label>
+                        <input type="text" id="customerName" placeholder="Masukkan nama lengkap Anda" required class="w-full px-3.5 py-2 bg-mula-softbg border border-mula-lightblue rounded-xl text-xs focus:outline-none focus:border-mula-blue transition-colors">
+                    </div>
+
+                    <!-- Tipe Pesanan (Dine In / Takeaway) -->
+                    <div>
+                        <label class="block text-xs font-semibold text-mula-text mb-1">Tipe Pesanan <span class="text-mula-accent">*</span></label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <label class="flex items-center justify-center gap-2 p-2 rounded-xl border border-mula-lightblue cursor-pointer hover:bg-mula-lightblue/50 transition-colors text-xs font-medium">
+                                <input type="radio" name="orderType" value="Dine In" checked onchange="toggleOrderType()" class="accent-mula-blue">
+                                <span>Dine In (Makan di Tempat)</span>
+                            </label>
+                            <label class="flex items-center justify-center gap-2 p-2 rounded-xl border border-mula-lightblue cursor-pointer hover:bg-mula-lightblue/50 transition-colors text-xs font-medium">
+                                <input type="radio" name="orderType" value="Takeaway" onchange="toggleOrderType()" class="accent-mula-blue">
+                                <span>Takeaway (Bawa Pulang)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Nomor Meja -->
+                    <div id="tableNoContainer">
+                        <label class="block text-xs font-semibold text-mula-text mb-1">Nomor Meja <span class="text-mula-accent">*</span></label>
+                        <input type="text" id="tableNo" placeholder="Contoh: Meja 05" required class="w-full px-3.5 py-2 bg-mula-softbg border border-mula-lightblue rounded-xl text-xs focus:outline-none focus:border-mula-blue transition-colors">
+                    </div>
+                </div>
+
+                <!-- Cart Items Container -->
+                <div id="cartItemsContainer" class="flex-grow overflow-y-auto p-6 space-y-4">
+                    <!-- Items & Catatan rendered here -->
+                </div>
+
+                <!-- Cart Footer / Summary -->
+                <div class="p-6 border-t border-mula-lightblue bg-mula-softbg space-y-4">
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between text-mula-subtext">
+                            <span>Subtotal</span>
+                            <span id="subtotalText" class="font-semibold text-mula-text">Rp0</span>
+                        </div>
+                        <div class="flex justify-between text-mula-subtext text-xs">
+                            <span>Estimasi PPN (10%)</span>
+                            <span id="taxText" class="font-medium">Rp0</span>
+                        </div>
+                        <div class="flex justify-between text-base font-bold text-mula-text pt-2 border-t border-mula-lightblue">
+                            <span>Total Estimasi</span>
+                            <span id="totalText" class="text-mula-blue text-lg">Rp0</span>
+                        </div>
+                    </div>
+
+                    <!-- Lanjut Bayar Button -->
+                    <button id="checkoutBtn" class="w-full bg-mula-blue hover:bg-mula-darkblue text-white font-bold py-3.5 rounded-2xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-mula-blue/20 text-sm">
+                        <i class="fa-solid fa-qrcode text-lg"></i>
+                        <span>Bayar Sekarang (QRIS / Transfer)</span>
+                    </button>
+
+                    <p class="text-[10px] text-center text-mula-subtext">Pembayaran diproses secara aman dan langsung melalui Gateway Resmi.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL STRUK BUKTI TRANSAKSI (TAMPIL SETELAH BAYAR BERHASIL VIA DOKU) -->
+    <div id="paymentModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+        <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" id="paymentBackdrop"></div>
+
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="relative bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-mula-lightblue space-y-6 z-10 my-8">
+                
+                <!-- Modal Header -->
+                <div class="flex justify-between items-center border-b border-mula-lightblue pb-4">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved text-mula-blue text-xl"></i>
+                        <h3 id="modalTitle" class="font-heading font-bold text-lg text-mula-text">Bukti Pembayaran Resmi</h3>
+                    </div>
+                    <button id="closePaymentBtn" class="text-mula-subtext hover:text-mula-text p-2 rounded-xl">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- BUKTI TRANSAKSI -->
+                <div id="receiptSection" class="space-y-4">
+                    <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 p-3.5 rounded-2xl text-xs flex items-center gap-2.5">
+                        <i class="fa-solid fa-circle-check text-emerald-600 text-lg flex-shrink-0"></i>
+                        <span><strong>Pembayaran Berhasil!</strong> Berikut bukti transaksi resmi pesanan Anda.</span>
+                    </div>
+
+                    <!-- Printable Receipt -->
+                    <div id="printableReceipt" class="bg-white p-5 rounded-2xl border border-dashed border-slate-300 font-mono text-xs text-slate-700 space-y-3">
+                        <div class="text-center pb-3 border-b border-dashed border-slate-300 space-y-1">
+                            <h4 class="font-bold text-base text-slate-800 uppercase">MULA EATERY</h4>
+                            <p class="text-[10px] text-slate-500">Jl. Mulawarman No. 107H, Samarinda</p>
+                            <p class="text-[10px] text-slate-500">WA: 0831-8351-6210</p>
+                            <span class="inline-block bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded text-[10px] uppercase mt-1">LUNAS / PAID (DOKU)</span>
+                        </div>
+
+                        <div class="space-y-1 text-[11px]">
+                            <div class="flex justify-between">
+                                <span>No. Transaksi:</span>
+                                <span id="receiptOrderNo" class="font-bold">#MULA-1001</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Waktu:</span>
+                                <span id="receiptDate">19/10/2026, 12:00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Pemesan:</span>
+                                <span id="receiptCustomer" class="font-bold">Nama</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Tipe/Meja:</span>
+                                <span id="receiptTable">Dine In (Meja 01)</span>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-b border-dashed border-slate-300 py-2 space-y-2" id="receiptItemsList">
+                            <!-- Items list rendered dynamically -->
+                        </div>
+
+                        <div class="space-y-1 text-[11px]">
+                            <div class="flex justify-between">
+                                <span>Subtotal:</span>
+                                <span id="receiptSubtotal">Rp0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>PPN (10%):</span>
+                                <span id="receiptTax">Rp0</span>
+                            </div>
+                            <div class="flex justify-between font-bold text-xs text-slate-900 pt-1 border-t border-slate-200">
+                                <span>TOTAL LUNAS:</span>
+                                <span id="receiptTotal">Rp0</span>
+                            </div>
+                        </div>
+
+                        <div class="text-center pt-2 text-[10px] text-slate-400 italic">
+                            *** Terima Kasih Atas Pembayaran Anda ***<br>
+                            #GoodThingsTakeRoots
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="window.print()" class="py-3 bg-mula-softbg hover:bg-mula-lightblue text-mula-text text-xs font-semibold rounded-xl border border-mula-lightblue flex items-center justify-center gap-2 transition-colors">
+                            <i class="fa-solid fa-print"></i>
+                            <span>Cetak Struk PDF</span>
+                        </button>
+                        <button id="sendWaReceiptBtn" onclick="sendToWhatsApp()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 text-xs transition-colors shadow-md">
+                            <i class="fa-brands fa-whatsapp text-base"></i>
+                            <span>Kirim ke WhatsApp</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT DATA & INTERACTION LOGIC -->
+    <script>
+        // 1. DATA MENU
+        const menuData = [
+            { id: 'v1', name: 'Tokyo Fog', category: 'summer', price: 30, desc: 'Teh Earl Grey dengan topping cold foam matcha yang lembut dan creamy', badge: 'NEW', isSummer: true, icon: 'fa-glass-water', image: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=600&q=80' },
+            { id: 'v2', name: 'Earl Grey Kalamanci', category: 'summer', price: 28, desc: 'Teh Earl Grey yang harum dengan calamansi segar dan sedikit rasa manis', isSummer: true, icon: 'fa-glass-water', image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80' },
+            { id: 'v3', name: 'Hongkong Ice Tea', category: 'summer', price: 28, desc: 'Black tea, lemon segar, dan soda berkarbonasi', isSummer: true, icon: 'fa-glass-water', image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80' },
+            { id: 'v4', name: 'Banna Smoothies', category: 'summer', price: 30, desc: 'Pisang dan buah naga yang diblender dengan es. Manis alami, tanpa tambahan gula', isSummer: true, icon: 'fa-wine-glass', image: 'https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=600&q=80' },
+            { id: 'v5', name: 'Pineapple Greens', category: 'summer', price: 30, desc: 'Nanas, pakcoy, dan es. Tanpa tambahan gula', isSummer: true, icon: 'fa-wine-glass', image: 'https://images.unsplash.com/photo-1610970881699-44a5587cabec?auto=format&fit=crop&w=600&q=80' },
+            { id: 'v6', name: 'Hamburg Tare Rice', category: 'summer', price: 58, desc: 'Daging sapi hamburg, telur mata sapi, nasi, tare khas MULA, salad kentang, dan kizami nori', isSummer: true, icon: 'fa-bowl-rice', image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=600&q=80' },
+            { id: 'v7', name: 'Chicken Spam Rice', category: 'summer', price: 40, desc: 'Chicken spam dan telur orak-arik ala Jepang di atas nasi, dilengkapi tare khas MULA', isSummer: true, icon: 'fa-bowl-rice', image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80' },
+            { id: 'v8', name: 'Kung Pao Chicken Rice', category: 'summer', price: 38, desc: 'Paha ayam yang dimasak dengan saus kung pao khas MULA, disajikan dengan nasi putih hangat', isSummer: true, icon: 'fa-bowl-rice', image: 'https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=600&q=80' },
+            { id: 'v9', name: 'Hainanese Chicken Rice', category: 'summer', price: 40, desc: 'Nasi gurih beraroma jahe dengan paha ayam kukus, sayuran, dan kondimen homemade', isSummer: true, icon: 'fa-bowl-rice', image: 'https://images.unsplash.com/photo-1626804475297-41608e074eb1?auto=format&fit=crop&w=600&q=80' },
+            { id: 'r1', name: 'Nasi Chicken Katsu', category: 'rice', price: 32, desc: 'Nasi, Chicken Katsu, dan telur mata sapi', badge: 'NEW', icon: 'fa-bowl-rice', image: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=600&q=80' },
+            { id: 'r2', name: 'Nasi Ayam Kemangi', category: 'rice', price: 35, desc: 'Nasi, ayam tumis kemangi, dan telur mata sapi', badge: 'NEW', icon: 'fa-bowl-rice', image: 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=600&q=80' },
+            { id: 'r3', name: 'Nasi Ayam Mula', category: 'rice', price: 48, desc: 'Nasi ayam kampung bumbu Mula, tahu tempe bacem, dan sambal khas Mula', icon: 'fa-bowl-rice', image: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=600&q=80' },
+            { id: 'r4', name: 'Nasi Kari Hainan', category: 'rice', price: 40, desc: 'Nasi, telur mata sapi, chicken katsu, dan kuah kari khas Mula', icon: 'fa-bowl-rice', image: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=600&q=80' },
+            { id: 'n1', name: 'Mie Yamien Manis', category: 'noodle', price: 30, desc: 'Mie homemade dengan topping ayam kecap', icon: 'fa-utensils', image: 'https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?auto=format&fit=crop&w=600&q=80' },
+            { id: 'n6', name: 'Yamien Chili Oil', category: 'noodle', price: 30, desc: 'Mie homemade dengan saos chili oil', badge: 'NEW', icon: 'fa-utensils', image: 'https://images.unsplash.com/photo-1541832676-9b763b0239ab?auto=format&fit=crop&w=600&q=80' },
+            { id: 's2', name: 'Risol Mayo Keju', category: 'snack', price: 12, desc: 'Risoles berisi daging asap, telur rebus, lembaran keju dan mayones', icon: 'fa-cookie', image: 'https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&w=600&q=80' },
+            { id: 'c1', name: 'Jasmine Milk Coffee', category: 'coffee', price: 35, desc: 'Perpaduan antara Jasmine Infused Milk dan espresso', badge: 'NEW', icon: 'fa-mug-hot', image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80' },
+            { id: 'c5', name: 'Americano', category: 'coffee', price: 20, desc: 'Espresso dan air', icon: 'fa-mug-hot', image: 'https://images.unsplash.com/photo-1551033406-611cf9a28f67?auto=format&fit=crop&w=600&q=80' },
+            { id: 'cc2', name: 'Aren Latte', category: 'creamycoffee', price: 28, desc: 'Espresso, fresh milk dan aren syrup', icon: 'fa-mug-hot', image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=600&q=80' },
+            { id: 'jt1', name: 'Ceremonial Matcha', category: 'japanesetea', price: 40, desc: 'Ceremonial grade matcha, fresh milk, disajikan tanpa tambahan gula', icon: 'fa-leaf', image: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=600&q=80' }
+        ];
+
+        // 2. CATEGORIES
+        const categories = [
+            { id: 'all', label: 'Semua Menu' },
+            { id: 'summer', label: 'Summer & Viral' },
+            { id: 'rice', label: 'Rice Bowl & Nasi' },
+            { id: 'noodle', label: 'Noodle & Pasta' },
+            { id: 'snack', label: 'Snacks' },
+            { id: 'coffee', label: 'Signature & Classic Coffee' },
+            { id: 'creamycoffee', label: 'Creamy Coffee' },
+            { id: 'japanesetea', label: 'Japanese Tea' }
+        ];
+
+        // 3. STATE
+        // Ubah jika file PHP ada di folder lain, contoh: '/api/create_payment.php'
+        const PAYMENT_API_URL = 'create_payment.php';
+
+        let cart = [];
+        let activeCategory = 'all';
+        let currentOrderData = null;
+        let isPaid = false;
+
+        // 4. DOM ELEMENTS
+        const menuGrid = document.getElementById('menuGrid');
+        const summerFeaturedGrid = document.getElementById('summerFeaturedGrid');
+        const categoryTabs = document.getElementById('categoryTabs');
+        const searchInput = document.getElementById('searchInput');
+        const emptyState = document.getElementById('emptyState');
+        
+        const cartModal = document.getElementById('cartModal');
+        const cartBackdrop = document.getElementById('cartBackdrop');
+        const cartPanel = document.getElementById('cartPanel');
+        const openCartBtn = document.getElementById('openCartBtn');
+        const closeCartBtn = document.getElementById('closeCartBtn');
+        const cartItemsContainer = document.getElementById('cartItemsContainer');
+        const cartBadge = document.getElementById('cartBadge');
+        
+        const subtotalText = document.getElementById('subtotalText');
+        const taxText = document.getElementById('taxText');
+        const totalText = document.getElementById('totalText');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        
+        const customerNameInput = document.getElementById('customerName');
+        const tableNoInput = document.getElementById('tableNo');
+        const tableNoContainer = document.getElementById('tableNoContainer');
+
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const toastNotification = document.getElementById('toastNotification');
+        const toastMessage = document.getElementById('toastMessage');
+
+        // Modal Elements
+        const paymentModal = document.getElementById('paymentModal');
+        const paymentBackdrop = document.getElementById('paymentBackdrop');
+        const closePaymentBtn = document.getElementById('closePaymentBtn');
+
+        // Receipt Fields
+        const receiptOrderNo = document.getElementById('receiptOrderNo');
+        const receiptDate = document.getElementById('receiptDate');
+        const receiptCustomer = document.getElementById('receiptCustomer');
+        const receiptTable = document.getElementById('receiptTable');
+        const receiptItemsList = document.getElementById('receiptItemsList');
+        const receiptSubtotal = document.getElementById('receiptSubtotal');
+        const receiptTax = document.getElementById('receiptTax');
+        const receiptTotal = document.getElementById('receiptTotal');
+
+        function formatRupiah(valInThousands) {
+            return 'Rp' + (valInThousands * 1000).toLocaleString('id-ID');
+        }
+
+        window.toggleOrderType = function() {
+            const selectedType = document.querySelector('input[name="orderType"]:checked').value;
+            if (selectedType === 'Takeaway') {
+                tableNoInput.value = '';
+                tableNoInput.disabled = true;
+                tableNoInput.classList.add('bg-gray-100', 'cursor-not-allowed');
+                tableNoInput.removeAttribute('required');
+                tableNoContainer.classList.add('opacity-50');
+            } else {
+                tableNoInput.disabled = false;
+                tableNoInput.classList.remove('bg-gray-100', 'cursor-not-allowed');
+                tableNoInput.setAttribute('required', 'required');
+                tableNoContainer.classList.remove('opacity-50');
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (new URLSearchParams(window.location.search).get('status') === 'paid') {
+                const saved = sessionStorage.getItem('mulaOrder');
+                if (saved) {
+                    currentOrderData = JSON.parse(saved);
+                    isPaid = true;
+                    showReceiptUI();
+                    openReceiptModal();
+                    sessionStorage.removeItem('mulaOrder');
+                    history.replaceState(null, '', window.location.pathname);
+                }
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('yearSpan').textContent = new Date().getFullYear();
+            renderCategoryTabs();
+            renderSummerFeatured();
+            renderMenu();
+            setupEventListeners();
+        });
+
+        function renderCategoryTabs() {
+            categoryTabs.innerHTML = categories.map(cat => `
+                <button 
+                    onclick="setCategory('${cat.id}')"
+                    class="px-5 py-2.5 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all duration-300 border ${
+                        activeCategory === cat.id 
+                            ? 'bg-mula-blue text-white border-mula-blue shadow-md shadow-mula-blue/20' 
+                            : 'bg-white text-mula-subtext border-mula-lightblue hover:bg-mula-lightblue hover:text-mula-text'
+                    }">
+                    ${cat.label}
+                </button>
+            `).join('');
+        }
+
+        window.setCategory = function(catId) {
+            activeCategory = catId;
+            renderCategoryTabs();
+            renderMenu();
+        };
+
+        function showToast(message) {
+            toastMessage.textContent = message;
+            toastNotification.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                toastNotification.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+            }, 2500);
+        }
+
+        function renderSummerFeatured() {
+            const featuredList = menuData.filter(item => item.isSummer).slice(0, 4);
+            summerFeaturedGrid.innerHTML = featuredList.map(item => `
+                <div class="bg-white rounded-3xl border border-mula-lightblue shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col justify-between group">
+                    <div>
+                        <div class="relative aspect-[4/3] overflow-hidden bg-slate-100">
+                            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                            <span class="absolute top-3 left-3 bg-mula-blue text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase shadow-sm">Summer Special</span>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-bold text-mula-text text-base">${item.name}</h4>
+                                <span class="font-bold text-mula-blue text-sm whitespace-nowrap ml-2">${formatRupiah(item.price)}</span>
+                            </div>
+                            <p class="text-xs text-mula-subtext line-clamp-2 mb-4">${item.desc}</p>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5">
+                        <button onclick="addToCart('${item.id}')" class="w-full py-2.5 bg-mula-softbg hover:bg-mula-blue hover:text-white text-mula-text text-xs font-semibold rounded-xl transition-colors border border-mula-lightblue flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-plus text-xs"></i>
+                            <span>Tambah ke Pesanan</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderMenu() {
+            const query = searchInput.value.toLowerCase().trim();
+            const filtered = menuData.filter(item => {
+                const matchesCategory = (activeCategory === 'all') || (item.category === activeCategory);
+                const matchesSearch = item.name.toLowerCase().includes(query) || item.desc.toLowerCase().includes(query);
+                return matchesCategory && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                menuGrid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            menuGrid.innerHTML = filtered.map(item => `
+                <div class="bg-white rounded-3xl border border-mula-lightblue shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden group">
+                    <div>
+                        <div class="relative aspect-[16/10] overflow-hidden bg-slate-100">
+                            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                            ${item.badge ? `<span class="absolute top-3 left-3 bg-mula-accent text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase shadow-md">${item.badge}</span>` : ''}
+                            ${item.isSummer ? `<span class="absolute top-3 right-3 bg-mula-blue text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase shadow-md">Summer</span>` : ''}
+                        </div>
+
+                        <div class="p-6">
+                            <div class="flex justify-between items-start gap-2 mb-2">
+                                <h3 class="font-heading font-bold text-lg text-mula-text group-hover:text-mula-blue transition-colors">${item.name}</h3>
+                                <span class="font-bold text-mula-blue text-base bg-mula-lightblue/60 px-3 py-1 rounded-xl whitespace-nowrap">${formatRupiah(item.price)}</span>
+                            </div>
+                            <p class="text-xs text-mula-subtext leading-relaxed mb-4">${item.desc}</p>
+                        </div>
+                    </div>
+
+                    <div class="px-6 pb-6">
+                        <button onclick="addToCart('${item.id}')" class="w-full py-3 bg-mula-lightblue hover:bg-mula-blue text-mula-blue hover:text-white text-xs font-bold rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 shadow-sm">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Tambah ke Pesanan</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.addToCart = function(id) {
+            const item = menuData.find(m => m.id === id);
+            if (!item) return;
+
+            const existing = cart.find(c => c.id === id);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...item, qty: 1, note: '' });
+            }
+
+            updateCartUI();
+            showToast(`${item.name} ditambahkan!`);
+        };
+
+        function changeQty(id, delta) {
+            const index = cart.findIndex(c => c.id === id);
+            if (index !== -1) {
+                cart[index].qty += delta;
+                if (cart[index].qty <= 0) {
+                    cart.splice(index, 1);
+                }
+            }
+            updateCartUI();
+        }
+
+        window.updateNote = function(id, noteValue) {
+            const item = cart.find(c => c.id === id);
+            if (item) {
+                item.note = noteValue;
+            }
+        };
+
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            if (totalItems > 0) {
+                cartBadge.textContent = totalItems;
+                cartBadge.classList.remove('hidden');
+            } else {
+                cartBadge.classList.add('hidden');
+            }
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="text-center py-12 text-mula-subtext space-y-3">
+                        <i class="fa-solid fa-basket-shopping text-4xl text-mula-blue/30"></i>
+                        <p class="text-sm font-medium">Keranjang kamu masih kosong</p>
+                        <p class="text-xs text-mula-subtext">Pilih hidangan menarik dari catalog kami.</p>
+                    </div>
+                `;
+            } else {
+                cartItemsContainer.innerHTML = cart.map(item => `
+                    <div class="bg-mula-softbg p-3.5 rounded-2xl border border-mula-lightblue space-y-2">
+                        <div class="flex items-center justify-between gap-3">
+                            <img src="${item.image}" alt="${item.name}" class="w-12 h-12 rounded-xl object-cover flex-shrink-0">
+                            <div class="flex-grow min-w-0">
+                                <h4 class="font-bold text-xs text-mula-text truncate">${item.name}</h4>
+                                <span class="text-xs text-mula-blue font-semibold">${formatRupiah(item.price)}</span>
+                            </div>
+                            <div class="flex items-center gap-2 bg-white px-2 py-1 rounded-xl border border-mula-lightblue flex-shrink-0">
+                                <button onclick="changeQty('${item.id}', -1)" class="w-6 h-6 flex items-center justify-center text-mula-subtext hover:text-mula-text text-xs">
+                                    <i class="fa-solid fa-minus"></i>
+                                </button>
+                                <span class="text-xs font-bold text-mula-text w-4 text-center">${item.qty}</span>
+                                <button onclick="changeQty('${item.id}', 1)" class="w-6 h-6 flex items-center justify-center text-mula-subtext hover:text-mula-text text-xs">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <input 
+                                type="text" 
+                                placeholder="Catatan khusus..." 
+                                value="${item.note || ''}" 
+                                onchange="updateNote('${item.id}', this.value)"
+                                class="w-full px-3 py-1.5 bg-white border border-mula-lightblue rounded-lg text-[11px] text-mula-text focus:outline-none focus:border-mula-blue"
+                            >
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            const subtotalInThousands = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const subtotal = subtotalInThousands * 1000;
+            const tax = subtotal * 0.10;
+            const total = subtotal + tax;
+
+            subtotalText.textContent = 'Rp' + subtotal.toLocaleString('id-ID');
+            taxText.textContent = 'Rp' + tax.toLocaleString('id-ID');
+            totalText.textContent = 'Rp' + total.toLocaleString('id-ID');
+        }
+
+        function openCart() {
+            cartModal.classList.remove('hidden');
+            setTimeout(() => {
+                cartBackdrop.classList.remove('opacity-0');
+                cartPanel.classList.remove('translate-x-full');
+            }, 10);
+        }
+
+        function closeCart() {
+            cartBackdrop.classList.add('opacity-0');
+            cartPanel.classList.add('translate-x-full');
+            setTimeout(() => {
+                cartModal.classList.add('hidden');
+            }, 300);
+        }
+
+        function openReceiptModal() {
+            closeCart();
+            paymentModal.classList.remove('hidden');
+        }
+
+        function closePaymentModal() {
+            paymentModal.classList.add('hidden');
+        }
+
+        // INTEGRASI REAL PAYMENT DOKU
+        async function handleCheckout() {
+            if (cart.length === 0) {
+                alert('Keranjang belanja Anda masih kosong.');
+                return;
+            }
+
+            const customerName = customerNameInput.value.trim();
+            const orderType = document.querySelector('input[name="orderType"]:checked').value;
+            const tableNo = tableNoInput.value.trim();
+
+            if (!customerName) {
+                alert('Silakan isi Nama Pemesan terlebih dahulu.');
+                customerNameInput.focus();
+                return;
+            }
+
+            if (orderType === 'Dine In' && !tableNo) {
+                alert('Untuk pilihan Dine In, silakan isi Nomor Meja Anda.');
+                tableNoInput.focus();
+                return;
+            }
+
+            let subtotalThousand = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const subtotal = subtotalThousand * 1000;
+            const tax = subtotal * 0.10;
+            const total = subtotal + tax;
+
+            const orderNo = '#MULA-' + Math.floor(1000 + Math.random() * 9000);
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('id-ID') + ', ' + now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+
+            currentOrderData = {
+                orderNo,
+                dateStr,
+                customerName,
+                orderType,
+                tableNo: orderType === 'Dine In' ? tableNo : 'Takeaway',
+                items: [...cart],
+                subtotal,
+                tax,
+                total
+            };
+
+            // Nonaktifkan tombol saat loading
+            checkoutBtn.disabled = true;
+            checkoutBtn.textContent = "Memproses Pembayaran...";
+
+            try {
+                // 1. Panggil backend PHP (satu folder dengan file HTML ini, buka lewat http://localhost/...)
+                const response = await fetch(PAYMENT_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        ...currentOrderData,
+                        callbackUrl: window.location.origin + window.location.pathname + '?status=paid'
+                    })
+                });
+
+                const raw = await response.text();
+                let data;
+                try { data = JSON.parse(raw); }
+                catch (e) { throw new Error('Alamat yang dipanggil: ' + response.url + '\n(status ' + response.status + ')\n\n' + raw.substring(0, 200)); }
+
+                if (!data.payment_url) {
+                    throw new Error(JSON.stringify(data));
+                }
+
+                // 2. Simpan pesanan, lalu arahkan ke halaman bayar DOKU
+                sessionStorage.setItem('mulaOrder', JSON.stringify(currentOrderData));
+                window.location.href = data.payment_url;
+                return;
+
+            } catch (err) {
+                alert('Gagal memproses pembayaran: ' + err.message);
+                console.error(err);
+            } finally {
+                checkoutBtn.disabled = false;
+                checkoutBtn.innerHTML = `<i class="fa-solid fa-qrcode text-lg"></i> <span>Bayar Sekarang (QRIS / Transfer)</span>`;
+            }
+        }
+
+        // Tampilkan Bukti Transaksi
+        function showReceiptUI() {
+            const { orderNo, dateStr, customerName, orderType, tableNo, items, subtotal, tax, total } = currentOrderData;
+
+            receiptOrderNo.textContent = orderNo;
+            receiptDate.textContent = dateStr;
+            receiptCustomer.textContent = customerName;
+            receiptTable.textContent = `${orderType} ${orderType === 'Dine In' ? '(' + tableNo + ')' : ''}`;
+
+            receiptItemsList.innerHTML = items.map(item => `
+                <div class="space-y-0.5">
+                    <div class="flex justify-between font-bold">
+                        <span>${item.name} x${item.qty}</span>
+                        <span>${formatRupiah(item.price * item.qty)}</span>
+                    </div>
+                    ${item.note ? `<p class="text-[10px] text-slate-500 italic">Note: ${item.note}</p>` : ''}
+                </div>
+            `).join('');
+
+            receiptSubtotal.textContent = 'Rp' + subtotal.toLocaleString('id-ID');
+            receiptTax.textContent = 'Rp' + tax.toLocaleString('id-ID');
+            receiptTotal.textContent = 'Rp' + total.toLocaleString('id-ID');
+        }
+
+        function sendToWhatsApp() {
+            if (!currentOrderData || !isPaid) {
+                alert('Mohon selesaikan pembayaran terlebih dahulu.');
+                return;
+            }
+
+            const { orderNo, customerName, orderType, tableNo, items, subtotal, tax, total } = currentOrderData;
+
+            let text = `Halo *MULA Eatery*, saya telah menyelesaikan pembayaran resmi:\n\n`;
+            text += `✅ *STATUS: PEMBAYARAN LUNAS (DOKU)*\n`;
+            text += `🆔 *NO. TRANSAKSI:* ${orderNo}\n\n`;
+            text += `📋 *DATA PEMESAN*\n`;
+            text += `• *Nama Pemesan:* ${customerName}\n`;
+            text += `• *Tipe Pesanan:* ${orderType}\n`;
+            if (orderType === 'Dine In') {
+                text += `• *Nomor Meja:* ${tableNo}\n`;
+            }
+            text += `\n🛒 *RINCIAN PESANAN:*\n`;
+
+            items.forEach((item, index) => {
+                const itemTotal = item.price * item.qty;
+                text += `\n${index + 1}. *${item.name}* (${item.qty}x) - ${formatRupiah(itemTotal)}`;
+                if (item.note && item.note.trim() !== '') {
+                    text += `\n   📝 *Catatan:* ${item.note.trim()}`;
+                }
+            });
+
+            text += `\n\n------------------------------`;
+            text += `\n*Subtotal:* Rp${subtotal.toLocaleString('id-ID')}`;
+            text += `\n*Estimasi PPN (10%):* Rp${tax.toLocaleString('id-ID')}`;
+            text += `\n*TOTAL LUNAS:* Rp${total.toLocaleString('id-ID')}`;
+            text += `\n------------------------------\n\n`;
+            text += `Mohon pesanan saya segera diproses. Terima kasih!`;
+
+            const encodedText = encodeURIComponent(text);
+            const waUrl = `https://wa.me/6283183516210?text=${encodedText}`;
+            window.open(waUrl, '_blank');
+        }
+
+        function setupEventListeners() {
+            searchInput.addEventListener('input', renderMenu);
+            openCartBtn.addEventListener('click', openCart);
+            closeCartBtn.addEventListener('click', closeCart);
+            cartBackdrop.addEventListener('click', closeCart);
+            checkoutBtn.addEventListener('click', handleCheckout);
+
+            closePaymentBtn.addEventListener('click', closePaymentModal);
+            paymentBackdrop.addEventListener('click', closePaymentModal);
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        }
+    </script>
+</body>
+</html>
